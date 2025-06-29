@@ -24,7 +24,7 @@ const formattingTimeLayoutWithMillis = "2006-01-02T15:04:05.000Z"
 var parsingTimelayouts = []string{
 	formattingTimeLayoutWithMillis,
 	formattingTimelayout,
-	"2006-01-02T15:04:05+00:00",
+	"2006-01-02T15:04:05-07:00",
 	"2006-01-02T15:04:05",
 	"2006-01-02 15:04:05Z",
 	"2006-01-02 15:04:05",
