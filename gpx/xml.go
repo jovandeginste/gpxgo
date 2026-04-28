@@ -17,14 +17,16 @@ import (
 	"golang.org/x/net/html/charset"
 )
 
-const formattingTimelayout = "2006-01-02T15:04:05Z"
-const formattingTimeLayoutWithMillis = "2006-01-02T15:04:05.000Z"
+const (
+	formattingTimelayout           = "2006-01-02T15:04:05Z"
+	formattingTimeLayoutWithMillis = "2006-01-02T15:04:05.000Z"
+)
 
 // parsingTimelayouts defines a list of possible time formats
 var parsingTimelayouts = []string{
 	formattingTimeLayoutWithMillis,
 	formattingTimelayout,
-	"2006-01-02T15:04:05+00:00",
+	"2006-01-02T15:04:05-07:00",
 	"2006-01-02T15:04:05",
 	"2006-01-02 15:04:05Z",
 	"2006-01-02 15:04:05",
@@ -122,7 +124,7 @@ func parseGPXTime(timestr string) (*time.Time, error) {
 		// Probably seconds with milliseconds
 		timestr = strings.Split(timestr, ".")[0]
 	}
-	timestr = strings.Trim(timestr, " \t\n\r")
+	timestr = strings.TrimSpace(timestr)
 	for _, timeLayout := range parsingTimelayouts {
 		t, err := time.Parse(timeLayout, timestr)
 

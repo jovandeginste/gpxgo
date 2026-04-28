@@ -14,6 +14,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestParseTime3(t *testing.T) {
+	tm, err := parseGPXTime("2026-04-26T18:22:27+02:00")
+	assert.Nil(t, err)
+	assert.Equal(t, "2026-04-26T18:22:27+02:00", tm.Format(time.RFC3339))
+}
+
 func TestParseTime2(t *testing.T) {
 	tm, err := parseGPXTime("2021-06-19T17:28:22+00:00")
 	assert.Nil(t, err)
@@ -138,7 +144,6 @@ func TestGuessVersion(t *testing.T) {
 			t.FailNow()
 		}
 	}
-
 }
 
 func TestInvalidVersion(t *testing.T) {
