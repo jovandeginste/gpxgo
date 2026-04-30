@@ -26,7 +26,7 @@ const (
 var parsingTimelayouts = []string{
 	formattingTimeLayoutWithMillis,
 	formattingTimelayout,
-	"2006-01-02T15:04:05-07:00",
+	"2006-01-02T15:04:05.999999999-07:00",
 	"2006-01-02T15:04:05",
 	"2006-01-02 15:04:05Z",
 	"2006-01-02 15:04:05",
@@ -120,15 +120,12 @@ func guessGPXVersion(bytes []byte) (string, error) {
 }
 
 func parseGPXTime(timestr string) (*time.Time, error) {
-	if strings.Contains(timestr, ".") {
-		// Probably seconds with milliseconds
-		timestr = strings.Split(timestr, ".")[0]
-	}
 	timestr = strings.TrimSpace(timestr)
 	for _, timeLayout := range parsingTimelayouts {
 		t, err := time.Parse(timeLayout, timestr)
 
 		if err == nil {
+			t = t.Truncate(time.Second)
 			return &t, nil
 		}
 	}
