@@ -26,6 +26,26 @@ func TestParseTime(t *testing.T) {
 	assert.Nil(t, time)
 }
 
+func TestParseTimeWithUTCoffset(t *testing.T) {
+	tm, err := parseGPXTime("2021-06-19T17:28:22+00:00")
+	assert.Nil(t, err)
+	if !assert.NotNil(t, tm) {
+		return
+	}
+	expected := time.Date(2021, 6, 19, 17, 28, 22, 0, time.UTC)
+	assert.True(t, tm.Equal(expected), "expected %v, got %v", expected, tm.UTC())
+}
+
+func TestParseTimeWithPositiveOffset(t *testing.T) {
+	tm, err := parseGPXTime("2021-06-19T22:58:22+05:30")
+	assert.Nil(t, err)
+	if !assert.NotNil(t, tm) {
+		return
+	}
+	expected := time.Date(2021, 6, 19, 17, 28, 22, 0, time.UTC)
+	assert.True(t, tm.Equal(expected), "expected %v, got %v", expected, tm.UTC())
+}
+
 type testXml struct {
 	XMLName   xml.Name        `xml:"gpx"`
 	Float     NullableFloat64 `xml:"float"`
